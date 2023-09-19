@@ -17,6 +17,7 @@ import {
 } from "react-bootstrap";
 import axios from "axios";
 
+
 const SignUpForm = () => {
   const [signUpData, setSignUpData] = useState({
     username: "",
