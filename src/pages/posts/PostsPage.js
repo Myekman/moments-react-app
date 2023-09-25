@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
@@ -13,17 +13,22 @@ import Post from "./Post";
 
 import NoResults from '../../assets/no-results.png';
 import Asset from "../../components/Assets";
+import { FormControl } from "react-bootstrap";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { fetchMoreData } from "../../utils/utils";
 
 function PostsPage({message, filter = "" }) {
     const [posts, setPosts] = useState({results: [] });
     const [hasLoaded, setHasLoaded] = useState(false);
     const { pathname } = useLocation();
 
+    const [query, setQuery] = useState("");
+    // const nodeRef = useRef(null);
 
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-            const { data } = await axiosReq.get(`/posts/?${filter}`);
+            const { data } = await axiosReq.get(`/posts/?${filter}search=${query}`);
             setPosts(data);
             setHasLoaded(true);
             } catch (err) {
@@ -31,21 +36,55 @@ function PostsPage({message, filter = "" }) {
             }
         };
 
-        setHasLoaded(false);
-        fetchPosts();
-      }, [filter, pathname]);
+    //     setHasLoaded(false);
+    //     fetchPosts();
+    //   }, [filter, query, pathname]);
+
+            setHasLoaded(false);
+            const timer = setTimeout(() => {
+                fetchPosts();
+            }, 1000);
+
+            return () => {
+                clearTimeout(timer);
+            };
+        }, [filter, query, pathname]);
 
     return (
         <Row className="h-100">
         <Col className="py-2 p-0 p-lg-2" lg={8}>
             <p>Popular profiles mobile</p>
+            {/* ----------------------------------------------------------------------------------searchbar */}
+            <i className={`fas fa-search ${styles.SearchIcon}`} />
+            <Form className={styles.SearchBar}
+                onSubmit={(event) => event.preventDefault()}
+                >
+                <Form.Control
+                    value = {query}
+                    onChange ={(event) => setQuery(event.target.value)}
+                    type="text"
+                    className="me-sm-2"
+                    placeholder="search post"
+                />
+            </Form>
+
             {hasLoaded ? (
                 <>
                 {/* // map over posts and render each one */}
-                {posts.results.length 
-                    ? posts.results.map((post) => (
-                        <Post key={post.id} {...post} setPosts={setPosts} />
-                    )
+                {posts.results.length ? (
+                <InfiniteScroll
+                    children={
+                         posts.results.map((post) => (
+                            <Post key={post.id} {...post} setPosts={setPosts} />
+                        ))
+                    }
+                    dataLength={posts.results.length}
+                    hasMore={!!posts.next}
+                    loader={<Asset spinner />}
+                    next={() => fetchMoreData(posts, setPosts)}
+                    // nodeRef={nodeRef}
+                
+                />
                 ) : (
                     // show no results
                     <Container className={appStyles.Content}>
@@ -54,7 +93,7 @@ function PostsPage({message, filter = "" }) {
                 )}
                 </>
             ) : (
-                // show spinner if not loaded
+                // show spinner if not loaded yet
                 <Container className={appStyles.Content}>
                 <Asset spinner />
                 </Container>
