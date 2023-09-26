@@ -9,6 +9,9 @@ import { useParams } from "react-router";
 import { axiosReq } from "../../api/axiosDefaults";
 import Post from "./Post";
 
+// useParams is a Client Component hook that 
+// lets you read a route's dynamic params filled in by the current URL.
+
 function PostPage() {
   const { id } = useParams();
   const [post, setPost] = useState({
