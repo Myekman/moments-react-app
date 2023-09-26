@@ -7,7 +7,7 @@ import Avatar from '../../components/Avatar';
 import { axiosRes } from "../../api/axiosDefaults";
 import { MoreDropdown } from '../../components/MoreDropdown';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-
+// import { Alert } from 'react-bootstrap';
 
 const Post = (props) => {
     const {
@@ -37,7 +37,8 @@ const Post = (props) => {
       const handleDelete = async () => {
         try {
           await axiosRes.delete(`/posts/${id}/`);
-          history.goBack();
+          history.push("/");
+          // history.goBack()
         } catch (err) {
           console.log(err);
         }
