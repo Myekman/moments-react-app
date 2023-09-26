@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState  } from "react";
 
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
@@ -13,7 +13,7 @@ import Post from "./Post";
 
 import NoResults from '../../assets/no-results.png';
 import Asset from "../../components/Assets";
-import { FormControl } from "react-bootstrap";
+// import { FormControl } from "react-bootstrap";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { fetchMoreData } from "../../utils/utils";
 

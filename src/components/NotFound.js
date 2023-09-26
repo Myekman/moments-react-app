@@ -1,6 +1,6 @@
 import React from 'react';
 import NoResults from '../assets/no-found2.jpg';
-import style from '../styles/NotFound.module.css';
+// import style from '../styles/NotFound.module.css';
 import Asset from './Assets';
 import { Link } from "react-router-dom";
 
