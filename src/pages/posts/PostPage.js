@@ -85,16 +85,16 @@ function PostPage() {
         />
         ) : currentUser ? (
           <span>No comments yet, be the first to comment!</span>
-        ) : (
-          <span>No comments... yet</span>
-        )}
-      </Container>
-    </Col>
-    <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
-      Popular profiles for desktop
-    </Col>
-  </Row>
-);
+          ) : (
+            <span>No comments... yet</span>
+          )}
+        </Container>
+      </Col>
+      <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
+        Popular profiles for desktop
+      </Col>
+    </Row>
+  );
 }
 
 export default PostPage;
