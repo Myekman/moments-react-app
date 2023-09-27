@@ -1,8 +1,14 @@
-.Form {
-    border: none;
-    border-bottom: 2px #00d1ff solid;
+.Owner {
+    font-weight: bold;
+    color: #2142b2;
+    margin-right: 8px;
   }
   
+  .Date {
+    font-weight: lighter;
+    color: #c1c1c5;
+  }
+
   .Button {
     border: none;
     background-color: #242a3d;
@@ -12,9 +18,14 @@
     min-width: 75px;
     margin: 5px;
   }
-  
+
   .Button:hover {
     cursor: pointer;
     background-color: aliceblue;
     color: #242a3d;
+  }
+
+  .Form {
+    border: none;
+    border-bottom: 2px #00d1ff solid;
   }

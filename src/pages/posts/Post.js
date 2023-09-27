@@ -7,7 +7,6 @@ import Avatar from '../../components/Avatar';
 import { axiosRes } from "../../api/axiosDefaults";
 import { MoreDropdown } from '../../components/MoreDropdown';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-// import { Alert } from 'react-bootstrap';
 
 const Post = (props) => {
     const {

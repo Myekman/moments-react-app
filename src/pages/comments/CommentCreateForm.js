@@ -4,9 +4,12 @@ import { Link } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 
-import styles from "../../styles/ CommentCreateEditForm.module.css"
+// import styles from "../../styles/ CommentCreateEditForm.module.css"
 import Avatar from "../../components/Avatar";
 import { axiosRes } from "../../api/axiosDefaults";
+
+import styles from "../../styles/Comment.module.css"
+
 
 function CommentCreateForm(props) {
   const { post, setPost, setComments, profileImage, profile_id } = props;
