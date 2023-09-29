@@ -16,8 +16,12 @@ import appStyles from "../../App.module.css";
 import btnStyles from "../../styles/Button.module.css";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { axiosReq } from "../../api/axiosDefaults";
+import { useRedirect } from "../../hooks/useRedirect";
 
 function PostCreateForm() {
+  // reusable hook prevent not logged in users to get access to posts/create url
+  useRedirect('loggedOut');
+
   const [errors, setErrors] = useState({});
 
   const [postData, setPostData] = useState({
@@ -27,6 +31,9 @@ function PostCreateForm() {
   });
   const { title, content, image } = postData;
 
+  const imageInput = useRef(null);
+  const history = useHistory();
+
   const handleChange = (event) => {
     setPostData({
       ...postData,
@@ -34,8 +41,6 @@ function PostCreateForm() {
     });
   };
 
-  const imageInput = useRef(null);
-  const history = useHistory();
 
   const handleChangeImage = (event) => {
     if (event.target.files.length) {
@@ -148,6 +153,11 @@ function PostCreateForm() {
                 ref={imageInput}
               />
             </Form.Group>
+            {errors?.image?.map((message, idx) => (	
+              <Alert variant="warning" key={idx}>	
+                {message}	
+              </Alert>	
+            ))}
             <div className="d-md-none">{textFields}</div>
           </Container>
         </Col>
