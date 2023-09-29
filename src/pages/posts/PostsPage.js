@@ -11,6 +11,8 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { axiosReq } from "../../api/axiosDefaults";
 import Post from "./Post";
 
+import { useCurrentUser } from "../../contexts/CurrentUserContext";
+
 import NoResults from '../../assets/no-results.png';
 import Asset from "../../components/Assets";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -21,6 +23,8 @@ function PostsPage({message, filter = "" }) {
     const [posts, setPosts] = useState({ results: [] });
     const [hasLoaded, setHasLoaded] = useState(false);
     const { pathname } = useLocation();
+
+    const currentUser = useCurrentUser();
 
     const [query, setQuery] = useState("");
     // const nodeRef = useRef(null);
@@ -48,7 +52,7 @@ function PostsPage({message, filter = "" }) {
         return () => {
             clearTimeout(timer);
         };
-    }, [filter, query, pathname]);
+    }, [filter, query, pathname, currentUser]);
 
     return (
         <Row className="h-100">
