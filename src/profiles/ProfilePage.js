@@ -6,23 +6,27 @@ import Container from "react-bootstrap/Container";
 
 import Asset from "../components/Assets";
 import NoResults from "../assets/no-results.png";
-
 import styles from "../../src/styles/ProfilePage.module.css";
 import btnStyles from "../../src/styles/Button.module.css";
 import appStyles from "../App.module.css";
+import { Button, Image } from "react-bootstrap";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-import PopularProfiles from "./PopularProfiles";
 import { useCurrentUser } from "../contexts/CurrentUserContext";
 import { useParams } from "react-router";
 import { axiosReq } from "../api/axiosDefaults";
+
 import {
   useProfileData,
   useSetProfileData,
 } from "../contexts/ProfileDataContext";
-import { Button, Image } from "react-bootstrap";
-import InfiniteScroll from "react-infinite-scroll-component";
-import Post from "../pages/posts/Post";
+
 import { fetchMoreData } from "../utils/utils";
+
+
+import PopularProfiles from "./PopularProfiles";
+import Post from "../pages/posts/Post";
+import { ProfileEditDropdown } from "../components/MoreDropdown";
 
 
 function ProfilePage() {
@@ -30,7 +34,7 @@ function ProfilePage() {
   const currentUser = useCurrentUser();
   const { id } = useParams();
 
-  const {setProfileData, handleFollow} = useSetProfileData();
+  const {setProfileData, handleFollow, handleUnfollow} = useSetProfileData();
   const { pageProfile } = useProfileData();
 
   const [profile] = pageProfile.results;
@@ -60,6 +64,8 @@ function ProfilePage() {
 
   const mainProfile = (
     <>
+    {/* if user is the owner */}
+    {profile?.is_owner && <ProfileEditDropdown id={profile?.id} />}
       <Row noGutters className="px-3 text-center">
         <Col lg={3} className="text-lg-left">
           <Image
@@ -85,13 +91,15 @@ function ProfilePage() {
             </Col>
           </Row>
         </Col>
+
+        {/* if the user is not the owner */}
         <Col lg={3} className="text-lg-right">
           {currentUser &&
             !is_owner &&
             (profile?.following_id ? (
               <Button
                 className={`${btnStyles.Button} ${btnStyles.BlackOutline}`}
-                onClick={() => {}}
+                onClick={() => handleUnfollow(profile)}
               >
                 unfollow
               </Button>

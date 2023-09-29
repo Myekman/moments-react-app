@@ -16,6 +16,7 @@ import Post from "./Post";
 import CommentCreateForm from "../comments/CommentCreateForm";
 import { useCurrentUser } from "../../contexts/CurrentUserContext";
 import Comment from "../comments/Comment";
+import PopularProfiles from "../../profiles/PopularProfiles";
 
 // useParams is a Client Component hook that 
 // lets you read a route's dynamic params filled in by the current URL.
@@ -50,7 +51,7 @@ function PostPage() {
   return (
     <Row className="h-100">
       <Col className="py-2 p-0 p-lg-2" lg={8}>
-        <p>Popular profiles for mobile</p>
+        <PopularProfiles mobile />
 
         {/* this below import content from post.js */}
         <Post {...post.results[0]} setPosts={setPost} postPage />
@@ -91,7 +92,7 @@ function PostPage() {
         </Container>
       </Col>
       <Col lg={4} className="d-none d-lg-block p-0 p-lg-2">
-        Popular profiles for desktop
+        <PopularProfiles />
       </Col>
     </Row>
   );
